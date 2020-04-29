@@ -11,8 +11,8 @@ public class MunicipioDTOTests {
     @Test
     public void whenGivenIDAndNameCreateDTO()
     {
-        MunicipioDTO abreCampo = new MunicipioDTO(3100302, "Abre Campo");
-        MunicipioDTO another = new MunicipioDTO(3100302, "Abre Campo");
+        final MunicipioDTO abreCampo = new MunicipioDTO(3100302, "Abre Campo");
+        final MunicipioDTO another = new MunicipioDTO(3100302, "Abre Campo");
         final MunicipioDTO aguanil = new MunicipioDTO(3100807, "Aguanil");
 
         assertThat(3100302, equalTo(abreCampo.getId()));
