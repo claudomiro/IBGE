@@ -1,5 +1,6 @@
 package org.codigolimpo.IBGE.service;
 
+import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,14 @@ public class IBGEServiceIT {
     {
         final MunicipioDTO actual = service.municipalityData(3100302);
         MunicipioDTO expected = new MunicipioDTO(3100302, "Abre Campo");
+        assertThat(actual, equalTo(expected));
+    }
+
+    @Test
+    public void whenGivenCodeReturnStateDTO()
+    {
+        final EstadoDTO actual = service.stateData(31);
+        final EstadoDTO expected = new EstadoDTO(31, "MG","Minas Gerais");
         assertThat(actual, equalTo(expected));
     }
 }
