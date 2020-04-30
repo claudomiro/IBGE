@@ -5,6 +5,10 @@ import org.springframework.web.client.RestTemplate;
 
 public class IBGEServiceImpl implements IBGEService {
 
+    private static final char SLASH = '/';
+    private static final String MUNICIPALITIES = "municipios";
+    private static final String URL_BASE = "https://servicodados.ibge.gov.br/api/v1/localidades";
+
     private final RestTemplate restTemplate;
 
     public IBGEServiceImpl(RestTemplate restTemplate) {
@@ -13,10 +17,13 @@ public class IBGEServiceImpl implements IBGEService {
 
     @Override
     public MunicipioDTO municipalityData(int idIBGE) {
-        final String uri = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/" + idIBGE;
-
+        final String uriMunicipality = produceURLMunipality(idIBGE);
         final Class<MunicipioDTO> clazz = MunicipioDTO.class;
-        return restTemplate.getForObject(uri, clazz);
+        return restTemplate.getForObject(uriMunicipality, clazz);
 
+    }
+
+    private String produceURLMunipality(int idIBGE) {
+        return URL_BASE + SLASH + MUNICIPALITIES + SLASH + idIBGE;
     }
 }
