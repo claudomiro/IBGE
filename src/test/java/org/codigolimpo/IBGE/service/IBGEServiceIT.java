@@ -57,7 +57,7 @@ public class IBGEServiceIT {
 
         final List<MunicipioDTO> list = dtoStream.collect(Collectors.toList());
 
-        assertThat(list.size(), greaterThan(1));
+        assertThat(list, is(not(empty())));
         assertThat(list, hasItem(ABRECAMPO));
     }
 

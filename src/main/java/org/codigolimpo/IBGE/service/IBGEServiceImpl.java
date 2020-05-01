@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 
 public class IBGEServiceImpl implements IBGEService {
 
-    private static final char SLASH = '/';
+    private static final String SEPARATOR = String.valueOf('/');
     private static final String URL_BASE = "https://servicodados.ibge.gov.br/api/v1/localidades";
-    private static final String MUNICIPALITIES = "municipios";
     protected static final String STATES = "estados";
+    private static final String MUNICIPALITIES = "municipios";
 
     private final RestTemplate restTemplate;
 
@@ -29,7 +29,18 @@ public class IBGEServiceImpl implements IBGEService {
             throw new RuntimeException("Retrieving all States returned null");
         }
         return Arrays.stream(dtoArray);
+    }
 
+    @Override
+    public Stream<MunicipioDTO> allMunicipalitiesInAState(int idIBGE) {
+        final String uri = produceRESTURL(STATES, idIBGE, MUNICIPALITIES);
+        final Class<MunicipioDTO[]> clazz = MunicipioDTO[].class;
+        final MunicipioDTO[] dtoArray = restTemplate.getForObject(uri, clazz);
+        if(dtoArray == null)
+        {
+            throw new RuntimeException("Retrieving all Municipalities returned null");
+        }
+        return Arrays.stream(dtoArray);
     }
 
     @Override
@@ -47,27 +58,19 @@ public class IBGEServiceImpl implements IBGEService {
         return restTemplate.getForObject(stateURL, clazz);
     }
 
-    @Override
-    public Stream<MunicipioDTO> allMunicipalitiesInAState(int idIBGE) {
-        final String baseURI = produceRESTURL(STATES, idIBGE);
-        final String uri = baseURI + SLASH + MUNICIPALITIES;
-        final Class<MunicipioDTO[]> clazz = MunicipioDTO[].class;
-        final MunicipioDTO[] dtoArray = restTemplate.getForObject(uri, clazz);
-        if(dtoArray == null)
-        {
-            throw new RuntimeException("Retrieving all Municipalities returned null");
-        }
-        return Arrays.stream(dtoArray);
-
-    }
-
     private String produceRESTURL(String objectName, int id) {
-        return produceRESTURL(objectName) + SLASH + +id;
+        return String.join(SEPARATOR, produceRESTURL(objectName), String.valueOf(id));
     }
 
     private String produceRESTURL(String objectName) {
-        return URL_BASE + SLASH + objectName;
+        return String.join(SEPARATOR, URL_BASE, objectName);
     }
+
+    private String produceRESTURL(String objectNameOutside, int id, String objectNameInside) {
+        final String baseURL = produceRESTURL(objectNameOutside, id);
+        return String.join(SEPARATOR, baseURL, objectNameInside);
+    }
+
 
 
 }
