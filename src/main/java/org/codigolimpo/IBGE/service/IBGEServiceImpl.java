@@ -1,5 +1,6 @@
 package org.codigolimpo.IBGE.service;
 
+import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +22,12 @@ public class IBGEServiceImpl implements IBGEService {
         final Class<MunicipioDTO> clazz = MunicipioDTO.class;
         return restTemplate.getForObject(uriMunicipality, clazz);
 
+    }
+
+    @Override
+    public EstadoDTO stateData(int idIBGE) {
+        return restTemplate.getForObject("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" +
+                + idIBGE, EstadoDTO.class);
     }
 
     private String produceURLMunipality(int idIBGE) {
