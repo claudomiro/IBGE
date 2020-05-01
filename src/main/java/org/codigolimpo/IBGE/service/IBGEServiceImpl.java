@@ -47,6 +47,20 @@ public class IBGEServiceImpl implements IBGEService {
         return restTemplate.getForObject(stateURL, clazz);
     }
 
+    @Override
+    public Stream<MunicipioDTO> allMunicipalitiesInAState(int idIBGE) {
+        final String baseURI = produceRESTURL(STATES, idIBGE);
+        final String uri = baseURI + SLASH + MUNICIPALITIES;
+        final Class<MunicipioDTO[]> clazz = MunicipioDTO[].class;
+        final MunicipioDTO[] dtoArray = restTemplate.getForObject(uri, clazz);
+        if(dtoArray == null)
+        {
+            throw new RuntimeException("Retrieving all Municipalities returned null");
+        }
+        return Arrays.stream(dtoArray);
+
+    }
+
     private String produceRESTURL(String objectName, int id) {
         return produceRESTURL(objectName) + SLASH + +id;
     }

@@ -13,4 +13,5 @@ public interface IBGEService {
 
     EstadoDTO stateData(int idIBGE);
 
+    Stream<MunicipioDTO> allMunicipalitiesInAState(int idIBGE);
 }
