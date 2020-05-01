@@ -50,4 +50,16 @@ public class IBGEServiceIT {
         assertThat(dtoList, hasItem(MINAS));
     }
 
+    @Test
+    public void whenGivenCorrectIdReturnAllMunicipalitiesInAState()
+    {
+        final Stream<MunicipioDTO> dtoStream = service.allMunicipalitiesInAState(MINAS_ID_IBGE);
+
+        final List<MunicipioDTO> list = dtoStream.collect(Collectors.toList());
+
+        assertThat(list.size(), greaterThan(1));
+        assertThat(list, hasItem(ABRECAMPO));
+    }
+
+
 }
