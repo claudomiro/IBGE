@@ -6,8 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 public class IBGEServiceIT {
     protected static final int ABRECAMPO_ID_IBGE = 3100302;
@@ -27,16 +31,23 @@ public class IBGEServiceIT {
     }
 
     @Test
-    public void whenGivenCodeReturnMunicipalityDTO()
-    {
+    public void whenGivenCodeReturnMunicipalityDTO() {
         final MunicipioDTO actual = service.municipalityData(ABRECAMPO_ID_IBGE);
         assertThat(actual, equalTo(ABRECAMPO));
     }
 
     @Test
-    public void whenGivenCodeReturnStateDTO()
-    {
+    public void whenGivenCodeReturnStateDTO() {
         final EstadoDTO actual = service.stateData(MINAS_ID_IBGE);
         assertThat(actual, equalTo(MINAS));
     }
+
+    @Test
+    public void returnAllStateDTOs() {
+        final Stream<EstadoDTO> dtoStream = service.allStates();
+        List<EstadoDTO> dtoList = dtoStream.collect(Collectors.toList());
+        assertThat(dtoList, is(not(empty())));
+        assertThat(dtoList, hasItem(MINAS));
+    }
+
 }
