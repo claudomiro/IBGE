@@ -7,8 +7,9 @@ import org.springframework.web.client.RestTemplate;
 public class IBGEServiceImpl implements IBGEService {
 
     private static final char SLASH = '/';
-    private static final String MUNICIPALITIES = "municipios";
     private static final String URL_BASE = "https://servicodados.ibge.gov.br/api/v1/localidades";
+    private static final String MUNICIPALITIES = "municipios";
+    protected static final String STATES = "estados";
 
     private final RestTemplate restTemplate;
 
@@ -18,19 +19,22 @@ public class IBGEServiceImpl implements IBGEService {
 
     @Override
     public MunicipioDTO municipalityData(int idIBGE) {
-        final String uriMunicipality = produceURLMunipality(idIBGE);
+        final String municipalityURL = produceRESTURL(MUNICIPALITIES, idIBGE);
         final Class<MunicipioDTO> clazz = MunicipioDTO.class;
-        return restTemplate.getForObject(uriMunicipality, clazz);
+        return restTemplate.getForObject(municipalityURL, clazz);
 
     }
 
     @Override
     public EstadoDTO stateData(int idIBGE) {
-        return restTemplate.getForObject("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" +
-                + idIBGE, EstadoDTO.class);
+        String stateURL = produceRESTURL(STATES, idIBGE);
+        Class<EstadoDTO> clazz = EstadoDTO.class;
+        return restTemplate.getForObject(stateURL, clazz);
     }
 
-    private String produceURLMunipality(int idIBGE) {
-        return URL_BASE + SLASH + MUNICIPALITIES + SLASH + idIBGE;
+    private String produceRESTURL(String objectName, int id) {
+        return URL_BASE + SLASH + objectName + SLASH + +id;
     }
+
+
 }
