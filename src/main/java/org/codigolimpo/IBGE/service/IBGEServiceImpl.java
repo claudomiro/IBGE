@@ -2,11 +2,13 @@ package org.codigolimpo.IBGE.service;
 
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+@Service
 public class IBGEServiceImpl implements IBGEService {
 
     private static final String SEPARATOR = String.valueOf('/');
