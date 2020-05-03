@@ -25,8 +25,8 @@ public class IBGEServiceImpl implements IBGEService {
     @Override
     public Stream<EstadoDTO> allStates() {
         String url = produceRESTURL(STATES);
-        Class<EstadoDTO[]> clazz = EstadoDTO[].class;
-        final EstadoDTO[] dtoArray = restTemplate.getForObject(url, clazz);
+        Class<EstadoDTO[]> type = EstadoDTO[].class;
+        final EstadoDTO[] dtoArray = restTemplate.getForObject(url, type);
         if (dtoArray == null) {
             throw new RuntimeException("Retrieving all States returned null");
         }
@@ -36,8 +36,8 @@ public class IBGEServiceImpl implements IBGEService {
     @Override
     public Stream<MunicipioDTO> allMunicipalitiesInAState(int idIBGE) {
         final String uri = produceRESTURL(STATES, idIBGE, MUNICIPALITIES);
-        final Class<MunicipioDTO[]> clazz = MunicipioDTO[].class;
-        final MunicipioDTO[] dtoArray = restTemplate.getForObject(uri, clazz);
+        final Class<MunicipioDTO[]> type = MunicipioDTO[].class;
+        final MunicipioDTO[] dtoArray = restTemplate.getForObject(uri, type);
         if(dtoArray == null)
         {
             throw new RuntimeException("Retrieving all Municipalities returned null");
@@ -48,16 +48,16 @@ public class IBGEServiceImpl implements IBGEService {
     @Override
     public MunicipioDTO municipalityData(int idIBGE) {
         final String municipalityURL = produceRESTURL(MUNICIPALITIES, idIBGE);
-        final Class<MunicipioDTO> clazz = MunicipioDTO.class;
-        return restTemplate.getForObject(municipalityURL, clazz);
+        final Class<MunicipioDTO> type = MunicipioDTO.class;
+        return restTemplate.getForObject(municipalityURL, type);
 
     }
 
     @Override
     public EstadoDTO stateData(int idIBGE) {
         String stateURL = produceRESTURL(STATES, idIBGE);
-        Class<EstadoDTO> clazz = EstadoDTO.class;
-        return restTemplate.getForObject(stateURL, clazz);
+        Class<EstadoDTO> type = EstadoDTO.class;
+        return restTemplate.getForObject(stateURL, type);
     }
 
     private String produceRESTURL(String objectName, int id) {
