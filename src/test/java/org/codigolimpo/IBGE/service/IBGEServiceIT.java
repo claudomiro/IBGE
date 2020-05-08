@@ -5,6 +5,8 @@ import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -15,13 +17,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.codigolimpo.IBGE.TestConstants.*;
 
+@SpringBootTest
 public class IBGEServiceIT {
 
     private IBGEService service;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @BeforeEach
     void setUp() {
-        service = new IBGEServiceImpl(new RestTemplate());
+        service = new IBGEServiceImpl(restTemplate);
     }
 
     @Test
