@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 import static org.codigolimpo.IBGE.TestConstants.*;
 
 @SpringBootTest
-public class IBGEServiceIT {
+public class IBGEServiceIT extends IBGEServiceTests {
 
     private IBGEService service;
 
@@ -60,10 +60,7 @@ public class IBGEServiceIT {
         assertThat(list, hasItem(ABRECAMPO));
     }
 
-    protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGEService service) {
-        final MunicipioDTO actual = service.municipalityData(ABRECAMPO_ID_IBGE);
-        assertThat(actual, equalTo(ABRECAMPO));
-    }
+
 
 
 
