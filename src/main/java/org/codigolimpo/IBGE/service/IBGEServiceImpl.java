@@ -8,23 +8,22 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import static org.codigolimpo.IBGE.service.IBGEURLs.*;
+
 @Service
 public class IBGEServiceImpl implements IBGEService {
 
-    private static final String SEPARATOR = String.valueOf('/');
-    private static final String URL_BASE = "https://servicodados.ibge.gov.br/api/v1/localidades";
-    protected static final String STATES = "estados";
-    private static final String MUNICIPALITIES = "municipios";
-
     private final RestTemplate restTemplate;
+    private final IBGEURLs ibgeurLs;
 
     public IBGEServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+        ibgeurLs = new IBGEURLs();
     }
 
     @Override
     public Stream<EstadoDTO> allStates() {
-        String url = produceRESTURL(STATES);
+        String url = ibgeurLs.produceRESTURL(STATES);
         Class<EstadoDTO[]> type = EstadoDTO[].class;
         final EstadoDTO[] dtoArray = restTemplate.getForObject(url, type);
         if (dtoArray == null) {
@@ -35,7 +34,7 @@ public class IBGEServiceImpl implements IBGEService {
 
     @Override
     public Stream<MunicipioDTO> allMunicipalitiesInAState(int idIBGE) {
-        final String uri = produceRESTURL(STATES, idIBGE, MUNICIPALITIES);
+        final String uri = ibgeurLs.produceRESTURL(STATES, idIBGE, MUNICIPALITIES);
         final Class<MunicipioDTO[]> type = MunicipioDTO[].class;
         final MunicipioDTO[] dtoArray = restTemplate.getForObject(uri, type);
         if(dtoArray == null)
@@ -47,7 +46,7 @@ public class IBGEServiceImpl implements IBGEService {
 
     @Override
     public MunicipioDTO municipalityData(int idIBGE) {
-        final String municipalityURL = produceRESTURL(MUNICIPALITIES, idIBGE);
+        final String municipalityURL = ibgeurLs.produceRESTURL(MUNICIPALITIES, idIBGE);
         final Class<MunicipioDTO> type = MunicipioDTO.class;
         return restTemplate.getForObject(municipalityURL, type);
 
@@ -55,22 +54,9 @@ public class IBGEServiceImpl implements IBGEService {
 
     @Override
     public EstadoDTO stateData(int idIBGE) {
-        String stateURL = produceRESTURL(STATES, idIBGE);
+        String stateURL = ibgeurLs.produceRESTURL(STATES, idIBGE);
         Class<EstadoDTO> type = EstadoDTO.class;
         return restTemplate.getForObject(stateURL, type);
-    }
-
-    private String produceRESTURL(String objectName, int id) {
-        return String.join(SEPARATOR, produceRESTURL(objectName), String.valueOf(id));
-    }
-
-    private String produceRESTURL(String objectName) {
-        return String.join(SEPARATOR, URL_BASE, objectName);
-    }
-
-    private String produceRESTURL(String objectNameOutside, int id, String objectNameInside) {
-        final String baseURL = produceRESTURL(objectNameOutside, id);
-        return String.join(SEPARATOR, baseURL, objectNameInside);
     }
 
 

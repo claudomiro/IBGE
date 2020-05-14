@@ -32,8 +32,7 @@ public class IBGEServiceIT {
 
     @Test
     public void whenGivenCodeReturnMunicipalityDTO() {
-        final MunicipioDTO actual = service.municipalityData(ABRECAMPO_ID_IBGE);
-        assertThat(actual, equalTo(ABRECAMPO));
+        assertWhenGivenCodeReturnMunicipalityDTO(this.service);
     }
 
     @Test
@@ -60,6 +59,12 @@ public class IBGEServiceIT {
         assertThat(list, is(not(empty())));
         assertThat(list, hasItem(ABRECAMPO));
     }
+
+    protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGEService service) {
+        final MunicipioDTO actual = service.municipalityData(ABRECAMPO_ID_IBGE);
+        assertThat(actual, equalTo(ABRECAMPO));
+    }
+
 
 
 }
