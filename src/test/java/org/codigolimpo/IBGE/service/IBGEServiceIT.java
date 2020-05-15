@@ -48,12 +48,7 @@ public class IBGEServiceIT extends IBGEServiceTests {
     @Test
     public void whenGivenCorrectIdReturnAllMunicipalitiesInAState()
     {
-        final Stream<MunicipioDTO> dtoStream = service.allMunicipalitiesInAState(ID_IBGE_MINAS);
-
-        final List<MunicipioDTO> list = dtoStream.collect(Collectors.toList());
-
-        assertThat(list, is(not(empty())));
-        assertThat(list, hasItem(ABRECAMPO));
+        super.assertAllMunicipalitiesInAState(this.service, ID_IBGE_MINAS, 770);
     }
 
 

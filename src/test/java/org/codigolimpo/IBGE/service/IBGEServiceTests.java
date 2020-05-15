@@ -39,7 +39,7 @@ public class IBGEServiceTests {
     public void whenGivenCodeReturnMunicipalityDTO() {
         String url = ibgeurLs.produceRESTURL(MUNICIPALITIES, ID_IBGE_ABRECAMPO);
         final Class<MunicipioDTO> type = MunicipioDTO.class;
-        when(restTemplate.getForObject(url, type)).thenReturn(ABRECAMPO);
+        when(restTemplate.getForObject(url, type)).thenReturn(DTO_ABRECAMPO);
 
         assertWhenGivenCodeReturnMunicipalityDTO(this.service);
     }
@@ -70,22 +70,24 @@ public class IBGEServiceTests {
     @Test
     public void whenGivenCorrectIdReturnAllMunicipalitiesInAState()
     {
-        MunicipioDTO dto_abadia = new MunicipioDTO(3100104, "Abadia dos Dourados");
-        MunicipioDTO dto_wenceslau = new MunicipioDTO(3172202, "Wenceslau Braz");
-        MunicipioDTO[] expected = new MunicipioDTO[] {dto_abadia, ABRECAMPO, dto_wenceslau};
+        MunicipioDTO[] expected = new MunicipioDTO[] {DTO_ABADIA, DTO_ABRECAMPO, DTO_WENCESLAU};
 
         when(restTemplate.getForObject(ibgeurLs.produceRESTURL(STATES, ID_IBGE_MINAS, MUNICIPALITIES),
                 MunicipioDTO[].class)).thenReturn(expected);
 
-        Stream<MunicipioDTO> municipioDTOs = this.service.allMunicipalitiesInAState(ID_IBGE_MINAS);
+        assertAllMunicipalitiesInAState(this.service, ID_IBGE_MINAS, 3);
+    }
+
+    protected void assertAllMunicipalitiesInAState(IBGEService service, int idIBGE, int numberOfMunicipalities) {
+        Stream<MunicipioDTO> municipioDTOs = service.allMunicipalitiesInAState(idIBGE);
         List<MunicipioDTO> list = municipioDTOs.collect(Collectors.toList());
-        assertThat(list, hasItems(dto_abadia, ABRECAMPO, dto_wenceslau));
-        assertThat(list.size(), is(greaterThanOrEqualTo(3)));
+        assertThat(list, hasItems(DTO_ABADIA, DTO_ABRECAMPO, DTO_WENCESLAU));
+        assertThat(list.size(), is(greaterThanOrEqualTo(numberOfMunicipalities)));
     }
 
     protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGEService service) {
         final MunicipioDTO actual = service.municipalityData(ID_IBGE_ABRECAMPO);
-        assertThat(actual, equalTo(ABRECAMPO));
+        assertThat(actual, equalTo(DTO_ABRECAMPO));
     }
 
 
