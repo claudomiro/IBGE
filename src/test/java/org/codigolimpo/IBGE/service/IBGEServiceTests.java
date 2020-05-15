@@ -2,7 +2,6 @@ package org.codigolimpo.IBGE.service;
 
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +51,17 @@ public class IBGEServiceTests {
 
     @Test
     public void returnAllStateDTOs() {
+        EstadoDTO rondoniaDTO = new EstadoDTO(11, "RO", "Rondônia");
+        EstadoDTO dfDTO = new EstadoDTO(53, "DF", "Distrito Federal");
+        EstadoDTO[] arrayExpected = {MINAS, rondoniaDTO, dfDTO};
+        when(restTemplate.getForObject(ibgeurLs.produceRESTURL(STATES),
+                EstadoDTO[].class))
+                .thenReturn(arrayExpected);
 
+        Stream<EstadoDTO> dtos = service.allStates();
+
+        List<EstadoDTO> list = dtos.collect(Collectors.toList());
+        assertThat(list, hasItems(MINAS, rondoniaDTO, dfDTO));
     }
 
     @Test
