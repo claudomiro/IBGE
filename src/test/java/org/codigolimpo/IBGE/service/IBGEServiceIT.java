@@ -1,6 +1,5 @@
 package org.codigolimpo.IBGE.service;
 
-import org.codigolimpo.IBGE.TestConstants;
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,22 +36,19 @@ public class IBGEServiceIT extends IBGEServiceTests {
 
     @Test
     public void whenGivenCodeReturnStateDTO() {
-        final EstadoDTO actual = service.stateData(MINAS_ID_IBGE);
-        assertThat(actual, equalTo(MINAS));
+        final EstadoDTO actual = service.stateData(ID_IBGE_MINAS);
+        assertThat(actual, equalTo(DTO_MINAS));
     }
 
     @Test
     public void returnAllStateDTOs() {
-        final Stream<EstadoDTO> dtoStream = service.allStates();
-        List<EstadoDTO> dtoList = dtoStream.collect(Collectors.toList());
-        assertThat(dtoList, is(not(empty())));
-        assertThat(dtoList, hasItem(MINAS));
+        super.assertAllStateDTOs(this.service, 27);
     }
 
     @Test
     public void whenGivenCorrectIdReturnAllMunicipalitiesInAState()
     {
-        final Stream<MunicipioDTO> dtoStream = service.allMunicipalitiesInAState(MINAS_ID_IBGE);
+        final Stream<MunicipioDTO> dtoStream = service.allMunicipalitiesInAState(ID_IBGE_MINAS);
 
         final List<MunicipioDTO> list = dtoStream.collect(Collectors.toList());
 

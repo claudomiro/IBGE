@@ -5,12 +5,22 @@ import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 
 public interface TestConstants {
 
-    int ABRECAMPO_ID_IBGE = 3100302;
-    int MINAS_ID_IBGE = 31;
-    String ABRE_CAMPO_NAME = "Abre Campo";
-    MunicipioDTO ABRECAMPO = new MunicipioDTO(ABRECAMPO_ID_IBGE, ABRE_CAMPO_NAME);
+    int ID_IBGE_ABRECAMPO = 3100302;
+    int ID_IBGE_MINAS = 31;
+    int ID_IBGE_RONDONIA = 11;
+    int ID_IBGE_DF = 53;
+    String NAME_ABRECAMPO = "Abre Campo";
+    MunicipioDTO ABRECAMPO = new MunicipioDTO(ID_IBGE_ABRECAMPO, NAME_ABRECAMPO);
 
-    String MINAS_ACRONYM = "MG";
-    String MINAS_NAME = "Minas Gerais";
-    EstadoDTO MINAS = new EstadoDTO(MINAS_ID_IBGE, MINAS_ACRONYM, MINAS_NAME);
+    String ACRONYM_RONDONIA = "RO";
+    String ACRONYM_MINAS = "MG";
+    String ACRONYM_DF = "DF";
+
+    String NAME_RONDONIA = "Rondônia";
+    String NAME_MINAS = "Minas Gerais";
+    String NAME_DF = "Distrito Federal";
+
+    EstadoDTO DTO_MINAS = new EstadoDTO(ID_IBGE_MINAS, ACRONYM_MINAS, NAME_MINAS);
+    EstadoDTO DTO_RONDONIA = new EstadoDTO(ID_IBGE_RONDONIA, ACRONYM_RONDONIA, NAME_RONDONIA);
+    EstadoDTO DTO_DF = new EstadoDTO(ID_IBGE_DF, ACRONYM_DF, NAME_DF);
 }

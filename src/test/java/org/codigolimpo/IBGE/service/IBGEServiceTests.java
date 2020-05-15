@@ -37,7 +37,7 @@ public class IBGEServiceTests {
 
     @Test
     public void whenGivenCodeReturnMunicipalityDTO() {
-        String url = ibgeurLs.produceRESTURL(MUNICIPALITIES, ABRECAMPO_ID_IBGE);
+        String url = ibgeurLs.produceRESTURL(MUNICIPALITIES, ID_IBGE_ABRECAMPO);
         final Class<MunicipioDTO> type = MunicipioDTO.class;
         when(restTemplate.getForObject(url, type)).thenReturn(ABRECAMPO);
 
@@ -51,17 +51,20 @@ public class IBGEServiceTests {
 
     @Test
     public void returnAllStateDTOs() {
-        EstadoDTO rondoniaDTO = new EstadoDTO(11, "RO", "Rondônia");
-        EstadoDTO dfDTO = new EstadoDTO(53, "DF", "Distrito Federal");
-        EstadoDTO[] arrayExpected = {MINAS, rondoniaDTO, dfDTO};
+        EstadoDTO[] arrayExpected = {DTO_MINAS, DTO_RONDONIA, DTO_DF};
         when(restTemplate.getForObject(ibgeurLs.produceRESTURL(STATES),
                 EstadoDTO[].class))
                 .thenReturn(arrayExpected);
 
-        Stream<EstadoDTO> dtos = service.allStates();
 
-        List<EstadoDTO> list = dtos.collect(Collectors.toList());
-        assertThat(list, hasItems(MINAS, rondoniaDTO, dfDTO));
+        assertAllStateDTOs(this.service, 3);
+    }
+
+    protected void assertAllStateDTOs(IBGEService service, int numberOfStates) {
+        final Stream<EstadoDTO> dtoStream = service.allStates();
+        List<EstadoDTO> dtoList = dtoStream.collect(Collectors.toList());
+        assertThat(dtoList, hasItems(DTO_MINAS, DTO_RONDONIA, DTO_DF));
+        assertThat(dtoList.size(), is(numberOfStates));
     }
 
     @Test
@@ -71,7 +74,7 @@ public class IBGEServiceTests {
     }
 
     protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGEService service) {
-        final MunicipioDTO actual = service.municipalityData(ABRECAMPO_ID_IBGE);
+        final MunicipioDTO actual = service.municipalityData(ID_IBGE_ABRECAMPO);
         assertThat(actual, equalTo(ABRECAMPO));
     }
 
