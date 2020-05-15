@@ -70,7 +70,17 @@ public class IBGEServiceTests {
     @Test
     public void whenGivenCorrectIdReturnAllMunicipalitiesInAState()
     {
+        MunicipioDTO dto_abadia = new MunicipioDTO(3100104, "Abadia dos Dourados");
+        MunicipioDTO dto_wenceslau = new MunicipioDTO(3172202, "Wenceslau Braz");
+        MunicipioDTO[] expected = new MunicipioDTO[] {dto_abadia, ABRECAMPO, dto_wenceslau};
 
+        when(restTemplate.getForObject(ibgeurLs.produceRESTURL(STATES, ID_IBGE_MINAS, MUNICIPALITIES),
+                MunicipioDTO[].class)).thenReturn(expected);
+
+        Stream<MunicipioDTO> municipioDTOs = this.service.allMunicipalitiesInAState(ID_IBGE_MINAS);
+        List<MunicipioDTO> list = municipioDTOs.collect(Collectors.toList());
+        assertThat(list, hasItems(dto_abadia, ABRECAMPO, dto_wenceslau));
+        assertThat(list.size(), is(greaterThanOrEqualTo(3)));
     }
 
     protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGEService service) {
