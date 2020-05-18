@@ -2,6 +2,7 @@ package org.codigolimpo.IBGE;
 
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
+import org.codigolimpo.IBGE.domain.FederalUnit;
 
 public interface TestConstants {
 
@@ -32,4 +33,7 @@ public interface TestConstants {
     EstadoDTO DTO_MINAS = new EstadoDTO(ID_IBGE_MINAS, ACRONYM_MINAS, NAME_MINAS);
     EstadoDTO DTO_RONDONIA = new EstadoDTO(ID_IBGE_RONDONIA, ACRONYM_RONDONIA, NAME_RONDONIA);
     EstadoDTO DTO_DF = new EstadoDTO(ID_IBGE_DF, ACRONYM_DF, NAME_DF);
+
+    FederalUnit MINAS = FederalUnit.createFromDTO(DTO_MINAS);
+    FederalUnit RONDONIA = FederalUnit.createFromDTO(DTO_RONDONIA);
 }

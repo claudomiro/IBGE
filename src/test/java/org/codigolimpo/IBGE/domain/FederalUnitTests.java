@@ -10,16 +10,14 @@ public class FederalUnitTests {
 
     @Test
     public void whenValidStateDTOCreateDomainObject() {
-        FederalUnit minasDomain_01 = FederalUnit.createFromDTO(DTO_MINAS);
-        FederalUnit minasDomain_02 = FederalUnit.createFromDTO(DTO_MINAS);
-        FederalUnit rondoniaDomain = FederalUnit.createFromDTO(DTO_RONDONIA);
-        assertThat(minasDomain_01.getId(), is(nullValue()));
-        assertThat(minasDomain_01.getIdIBGE(), equalTo(ID_IBGE_MINAS));
-        assertThat(minasDomain_01.getAcronym(), equalTo(ACRONYM_MINAS));
-        assertThat(minasDomain_01.getName(), equalTo(NAME_MINAS));
+        FederalUnit otherMinasDomain = FederalUnit.createFromDTO(DTO_MINAS);
+        assertThat(MINAS.getId(), is(nullValue()));
+        assertThat(MINAS.getIdIBGE(), equalTo(ID_IBGE_MINAS));
+        assertThat(MINAS.getAcronym(), equalTo(ACRONYM_MINAS));
+        assertThat(MINAS.getName(), equalTo(NAME_MINAS));
 
-        assertThat(minasDomain_01, equalTo(minasDomain_02));
-        assertThat(minasDomain_01, is(not(equalTo(rondoniaDomain))));
+        assertThat(MINAS, equalTo(otherMinasDomain));
+        assertThat(MINAS, is(not(equalTo(RONDONIA))));
     }
 
 }
