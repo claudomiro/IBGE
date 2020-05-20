@@ -36,14 +36,9 @@ public class IbgeApplication {
     }
 
     private void run() {
-        for (EstadoDTO state : service.allStates().collect(Collectors.toList())) {
-            System.out.println( String.format("(=====> %s (%s)", state.getNome(), state.getSigla()));
-            printAllMunicipalities(state);
-        }
+        System.out.println("IbgeApplication run()");
+
     }
 
-    private void printAllMunicipalities(EstadoDTO s) {
-        service.allMunicipalitiesInAState(s.getId())
-                .forEach(m -> System.out.println(m.getNome()));
-    }
+
 }
