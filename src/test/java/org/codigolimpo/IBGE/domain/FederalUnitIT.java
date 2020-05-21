@@ -1,14 +1,14 @@
 package org.codigolimpo.IBGE.domain;
 
-import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
+import org.codigolimpo.IBGE.TestConstants;
 import org.codigolimpo.IBGE.repository.FederalUnitRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.codigolimpo.IBGE.TestConstants.*;
 
 @SpringBootTest
 public class FederalUnitIT {
@@ -18,9 +18,8 @@ public class FederalUnitIT {
 
     @Test
     public void whenValidaSaveFederalUnit() {
-        EstadoDTO testDTO = new EstadoDTO(9999, "FT", "Federal Unit of Test");
-        FederalUnit teste = FederalUnit.createFromDTO(testDTO);
-        FederalUnit anotherTest = FederalUnit.createFromDTO(testDTO);
+        FederalUnit teste = FederalUnit.createFromDTO(DTO_TEST);
+        FederalUnit anotherTest = FederalUnit.createFromDTO(DTO_TEST);
 
         assertThat(teste.getId(), is(nullValue()));
         repository.save(teste);

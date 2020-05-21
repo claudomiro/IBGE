@@ -21,18 +21,22 @@ public interface TestConstants {
     int ID_IBGE_MINAS = 31;
     int ID_IBGE_RONDONIA = 11;
     int ID_IBGE_DF = 53;
+    int ID_IBGE_TEST = 9999;
 
     String ACRONYM_RONDONIA = "RO";
     String ACRONYM_MINAS = "MG";
     String ACRONYM_DF = "DF";
+    String ARONYM_TEST = "FT";
 
     String NAME_RONDONIA = "Rondônia";
     String NAME_MINAS = "Minas Gerais";
     String NAME_DF = "Distrito Federal";
+    String NAME_TEST = "Federal Unit of Test";
 
     EstadoDTO DTO_MINAS = new EstadoDTO(ID_IBGE_MINAS, ACRONYM_MINAS, NAME_MINAS);
     EstadoDTO DTO_RONDONIA = new EstadoDTO(ID_IBGE_RONDONIA, ACRONYM_RONDONIA, NAME_RONDONIA);
     EstadoDTO DTO_DF = new EstadoDTO(ID_IBGE_DF, ACRONYM_DF, NAME_DF);
+    EstadoDTO DTO_TEST = new EstadoDTO(ID_IBGE_TEST, ARONYM_TEST, NAME_TEST);
 
     FederalUnit MINAS = FederalUnit.createFromDTO(DTO_MINAS);
     FederalUnit RONDONIA = FederalUnit.createFromDTO(DTO_RONDONIA);
