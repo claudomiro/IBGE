@@ -1,6 +1,5 @@
 package org.codigolimpo.IBGE.domain;
 
-import org.codigolimpo.IBGE.TestConstants;
 import org.codigolimpo.IBGE.repository.FederalUnitRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,13 @@ public class FederalUnitIT {
 
     @Test
     public void whenValidaSaveFederalUnit() {
-        FederalUnit teste = FederalUnit.createFromDTO(DTO_TEST);
-        FederalUnit anotherTest = FederalUnit.createFromDTO(DTO_TEST);
+        FederalUnit test = FederalUnit.createFromDTO(DTO_FEDERAL_UNIT_TEST);
+        FederalUnit anotherTest = FederalUnit.createFromDTO(DTO_FEDERAL_UNIT_TEST);
 
-        assertThat(teste.getId(), is(nullValue()));
-        repository.save(teste);
-        assertThat(teste.getId(), is(not(nullValue())));
+        assertThat(test.getId(), is(nullValue()));
+        repository.save(test);
+        assertThat(test.getId(), is(not(nullValue())));
 
-        assertThat(teste, is(equalTo(anotherTest)));
+        assertThat(test, is(equalTo(anotherTest)));
     }
 }
