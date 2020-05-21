@@ -2,35 +2,45 @@ package org.codigolimpo.IBGE.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
+import org.hibernate.annotations.NaturalId;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 @Getter
+@ToString
 @EqualsAndHashCode
 public class FederalUnit {
+    @Id
+    @GeneratedValue
+    @EqualsAndHashCode.Exclude
     private Long id;
+
+    @NaturalId
     private int idIBGE;
     private String acronym;
     private String name;
-    private List<Municipality> municipios;
 
     public static FederalUnit createFromDTO(EstadoDTO dto) {
         return new FederalUnit(dto.getId(), dto.getSigla(), dto.getNome());
     }
 
-    private FederalUnit( int idIBGE, String acronym, String name) {
+    private FederalUnit() {
+    }
+
+    private FederalUnit(int idIBGE, String acronym, String name) {
         this.idIBGE = idIBGE;
         this.acronym = acronym;
         this.name = name;
-        this.municipios = new ArrayList<>();
     }
 
     Municipality createMunicipalityFromDTO(MunicipioDTO dto) {
-        Municipality municipality = new Municipality(this, dto);
-        this.municipios.add(municipality);
-        return municipality;
+        return new Municipality(this, dto);
     }
+
 }
