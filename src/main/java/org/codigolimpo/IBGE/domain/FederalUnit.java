@@ -2,7 +2,6 @@ package org.codigolimpo.IBGE.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
 import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 import org.hibernate.annotations.NaturalId;
@@ -10,10 +9,12 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
-@ToString
 @EqualsAndHashCode
 public class FederalUnit {
     @Id
@@ -25,6 +26,10 @@ public class FederalUnit {
     private int idIBGE;
     private String acronym;
     private String name;
+
+    @OneToMany(mappedBy = "federalUnit")
+    @EqualsAndHashCode.Exclude
+    private Set<Municipality> municipios = new HashSet<>();
 
     public static FederalUnit createFromDTO(EstadoDTO dto) {
         return new FederalUnit(dto.getId(), dto.getSigla(), dto.getNome());
@@ -40,7 +45,9 @@ public class FederalUnit {
     }
 
     Municipality createMunicipalityFromDTO(MunicipioDTO dto) {
-        return new Municipality(this, dto);
+        Municipality municipality = new Municipality(this, dto);
+        getMunicipios().add(municipality);
+        return municipality;
     }
 
 }

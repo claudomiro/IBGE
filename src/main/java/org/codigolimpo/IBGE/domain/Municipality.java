@@ -28,6 +28,9 @@ public class Municipality {
     private int idIBGE;
     String name;
 
+    private Municipality() {
+    }
+
     Municipality(FederalUnit federalUnit, MunicipioDTO dto) {
         this.federalUnit = federalUnit;
         this.idIBGE = dto.getId();
