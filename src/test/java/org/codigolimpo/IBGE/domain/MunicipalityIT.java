@@ -2,6 +2,7 @@ package org.codigolimpo.IBGE.domain;
 
 import org.codigolimpo.IBGE.repository.FederalUnitRepository;
 import org.codigolimpo.IBGE.repository.MunicipalityRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,13 @@ public class MunicipalityIT {
 
     @Autowired
     FederalUnitRepository federalUnitRepository;
+
+    @AfterEach
+    public void cleanUp()
+    {
+        municipalityRepository.deleteAll();
+        federalUnitRepository.deleteAll();
+    }
 
     @Test
     public void whenValidaSaveMunicipality() {

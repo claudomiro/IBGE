@@ -1,19 +1,25 @@
 package org.codigolimpo.IBGE.domain;
 
 import org.codigolimpo.IBGE.repository.FederalUnitRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.codigolimpo.IBGE.TestConstants.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class FederalUnitIT {
 
     @Autowired
     FederalUnitRepository repository;
+
+    @AfterEach
+    public void cleanUp() {
+        repository.deleteAll();
+    }
 
     @Test
     public void whenValidaSaveFederalUnit() {
@@ -26,4 +32,5 @@ public class FederalUnitIT {
 
         assertThat(test, is(equalTo(anotherTest)));
     }
+
 }
