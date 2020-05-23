@@ -29,7 +29,7 @@ public class FederalUnit {
 
     @OneToMany(mappedBy = "federalUnit")
     @EqualsAndHashCode.Exclude
-    private Set<Municipality> municipios = new HashSet<>();
+    private Set<Municipality> municipalities = new HashSet<>();
 
     public static FederalUnit createFromDTO(EstadoDTO dto) {
         return new FederalUnit(dto.getId(), dto.getSigla(), dto.getNome());
@@ -46,7 +46,7 @@ public class FederalUnit {
 
     Municipality createMunicipalityFromDTO(MunicipioDTO dto) {
         Municipality municipality = new Municipality(this, dto);
-        getMunicipios().add(municipality);
+        getMunicipalities().add(municipality);
         return municipality;
     }
 
