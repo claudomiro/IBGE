@@ -5,7 +5,7 @@ import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 
 import java.util.stream.Stream;
 
-public interface IBGEService {
+public interface IBGERESTService {
 
     Stream<EstadoDTO> allStates();
 

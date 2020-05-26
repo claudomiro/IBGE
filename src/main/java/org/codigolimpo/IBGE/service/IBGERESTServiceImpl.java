@@ -11,12 +11,12 @@ import java.util.stream.Stream;
 import static org.codigolimpo.IBGE.service.IBGEURLs.*;
 
 @Service
-public class IBGEServiceImpl implements IBGEService {
+public class IBGERESTServiceImpl implements IBGERESTService {
 
     private final RestTemplate restTemplate;
     private final IBGEURLs ibgeurLs;
 
-    public IBGEServiceImpl(RestTemplate restTemplate) {
+    public IBGERESTServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
         ibgeurLs = new IBGEURLs();
     }

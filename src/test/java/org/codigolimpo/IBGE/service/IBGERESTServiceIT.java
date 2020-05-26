@@ -1,32 +1,27 @@
 package org.codigolimpo.IBGE.service;
 
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
-import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.codigolimpo.IBGE.TestConstants.*;
 
 @SpringBootTest
-public class IBGEServiceIT extends IBGEServiceTests {
+public class IBGERESTServiceIT extends IBGERESTServiceTests {
 
-    private IBGEService service;
+    private IBGERESTService service;
 
     @Autowired
     private RestTemplate restTemplate;
 
     @BeforeEach
     void setUp() {
-        service = new IBGEServiceImpl(restTemplate);
+        service = new IBGERESTServiceImpl(restTemplate);
     }
 
     @Test

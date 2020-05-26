@@ -21,13 +21,13 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class IBGEServiceTests {
+public class IBGERESTServiceTests {
 
     @Mock
     private RestTemplate restTemplate;
 
     @InjectMocks
-    private IBGEServiceImpl service;
+    private IBGERESTServiceImpl service;
     private IBGEURLs ibgeurLs;
 
     @BeforeEach
@@ -60,7 +60,7 @@ public class IBGEServiceTests {
         assertAllStateDTOs(this.service, 3);
     }
 
-    protected void assertAllStateDTOs(IBGEService service, int numberOfStates) {
+    protected void assertAllStateDTOs(IBGERESTService service, int numberOfStates) {
         final Stream<EstadoDTO> dtoStream = service.allStates();
         List<EstadoDTO> dtoList = dtoStream.collect(Collectors.toList());
         assertThat(dtoList, hasItems(DTO_MINAS, DTO_RONDONIA, DTO_DF));
@@ -78,14 +78,14 @@ public class IBGEServiceTests {
         assertAllMunicipalitiesInAState(this.service, ID_IBGE_MINAS, 3);
     }
 
-    protected void assertAllMunicipalitiesInAState(IBGEService service, int idIBGE, int numberOfMunicipalities) {
+    protected void assertAllMunicipalitiesInAState(IBGERESTService service, int idIBGE, int numberOfMunicipalities) {
         Stream<MunicipioDTO> municipioDTOs = service.allMunicipalitiesInAState(idIBGE);
         List<MunicipioDTO> list = municipioDTOs.collect(Collectors.toList());
         assertThat(list, hasItems(DTO_ABADIA, DTO_ABRECAMPO, DTO_WENCESLAU));
         assertThat(list.size(), is(greaterThanOrEqualTo(numberOfMunicipalities)));
     }
 
-    protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGEService service) {
+    protected void assertWhenGivenCodeReturnMunicipalityDTO(IBGERESTService service) {
         final MunicipioDTO actual = service.municipalityData(ID_IBGE_ABRECAMPO);
         assertThat(actual, equalTo(DTO_ABRECAMPO));
     }
