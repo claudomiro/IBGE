@@ -1,7 +1,7 @@
 package org.codigolimpo.IBGE;
 
 import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
-import org.codigolimpo.IBGE.service.IBGEService;
+import org.codigolimpo.IBGE.service.IBGERESTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class IbgeApplication {
 
     @Autowired
-    IBGEService service;
+    IBGERESTService service;
 
     public static void main(String[] args) {
         SpringApplication.run(IbgeApplication.class, args);
