@@ -44,7 +44,7 @@ public class FederalUnit {
         this.name = name;
     }
 
-    Municipality createMunicipalityFromDTO(MunicipioDTO dto) {
+    public Municipality createMunicipalityFromDTO(MunicipioDTO dto) {
         Municipality municipality = new Municipality(this, dto);
         getMunicipalities().add(municipality);
         return municipality;
