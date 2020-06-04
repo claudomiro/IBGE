@@ -1,6 +1,9 @@
 package org.codigolimpo.IBGE;
 
-import org.codigolimpo.IBGE.domain.DTO.EstadoDTO;
+import org.codigolimpo.IBGE.domain.DTO.MunicipioDTO;
+import org.codigolimpo.IBGE.domain.FederalUnit;
+import org.codigolimpo.IBGE.domain.Municipality;
+import org.codigolimpo.IBGE.service.DatabaseService;
 import org.codigolimpo.IBGE.service.IBGERESTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,15 +14,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @SpringBootApplication
 public class IbgeApplication {
 
     @Autowired
-    IBGERESTService service;
+    IBGERESTService ibgeRESTtService;
+
+    @Autowired
+    DatabaseService databaseService;
 
     public static void main(String[] args) {
         SpringApplication.run(IbgeApplication.class, args);
@@ -32,13 +34,31 @@ public class IbgeApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx)  {
-        return (args -> run());
-    }
-
-    private void run() {
-        System.out.println("IbgeApplication run()");
+        return (args -> run(args));
 
     }
 
+    private void run(String[] args) {
+        if(args.length ==1 && "REFRESH".equalsIgnoreCase(args[0])) {
+            System.out.println("'REFRESH' commanded. contructing local database.");
+            ibgeRESTtService.allStates()
+                    .map(dto -> FederalUnit.createFromDTO(dto))
+                    .forEach(this::saveFederalUnit );
+        } else {
+            System.out.println("Pass 'REFRESH' as argument to populate local database");
+        }
+    }
+
+    private void saveFederalUnit(FederalUnit federalUnit) {
+        System.out.println(federalUnit.getName());
+        databaseService.saveFederalUnit(federalUnit);
+        ibgeRESTtService.allMunicipalitiesInAState(federalUnit.getIdIBGE())
+                .forEach(municipioDTO -> saveMunicipality(federalUnit, municipioDTO));
+    }
+
+    private void saveMunicipality(FederalUnit federalUnit, MunicipioDTO municipioDTO) {
+        Municipality municipality = federalUnit.createMunicipalityFromDTO(municipioDTO);
+        databaseService.saveMunicipality(municipality);
+    }
 
 }
